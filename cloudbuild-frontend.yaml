@@ -1,7 +1,7 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/learn-361304/voiceagents-frontend', '-f', 'frontend/Dockerfile', '.']
+  args: ['build', '-t', 'gcr.io/learn-361304/insurance-voice-frontend', '-f', 'frontend/Dockerfile', '.']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/learn-361304/voiceagents-frontend']
+  args: ['push', 'gcr.io/learn-361304/insurance-voice-frontend']
 images:
-- 'gcr.io/learn-361304/voiceagents-frontend'
+- 'gcr.io/learn-361304/insurance-voice-frontend'

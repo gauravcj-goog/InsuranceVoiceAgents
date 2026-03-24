@@ -1,50 +1,50 @@
 # Insurance Voice Agents
 
-A multimodal voice assistant designed for **Insurance Services**. This application leverages **Google's Agent Development Kit (ADK)** and the **Gemini 2.5 Flash Native Audio** model to provide real-time, bidirectional voice interactions for insurance customers.
+A multimodal voice assistant specialized in **LIC Life Insurance**. This application leverages **Google's Agent Development Kit (ADK)** and the **Gemini 2.5 Flash Native Audio** model to provide real-time, bidirectional voice interactions for insurance customers.
 
 ![bidi-demo-screen](assets/bidi-demo-screen.png)
 
 ## Capabilities & Domain Delivery
 
-### Domain: Indian Banking & Credit Cards
-This agent serves as a customer support representative for Cymbal Bank, specializing in the Indian market. It is capable of:
+### Domain: LIC Life Insurance
+This agent serves as a customer support representative for Cymbal Insurance, specializing in **LIC (Life Insurance Corporation of India)** products. It is capable of:
 -   **Multilingual Support**: Seamlessly switches between Hindi and English based on user preference.
--   **General Banking**: Answering queries about account balances and transactions.
--   **Credit Card Expertise**: Providing detailed information about Cymbal Bank's credit card offerings (modeled after Federal Bank products like Visa Celesta, Imperio, Signet).
--   **Application Processing**: Collecting user details to process credit card applications.
+-   **Product Expertise**: Providing detailed information about LIC plans (Endowment, Whole Life, Term Assurance, Pension).
+-   **Eligibility Checks**: Verifying basic criteria (age, sum assured, policy term) for various plans.
+-   **Proposal Initiation**: Collecting details for life insurance proposal forms (Form 300/340).
 
 ### Key Use Cases
-1.  **Product Discovery**: "Tell me about the benefits of the Visa Celesta card."
-2.  **Eligibility Checks**: "Am I eligible for a credit card with a salary of 5 Lakhs?"
-3.  **Fee Inquiries**: "What is the annual fee for the Imperio card?"
-4.  **Application**: "I want to apply for this card." (Triggers the specialized application sub-agent).
+1.  **Product Discovery**: "Tell me about the benefits of the Bima Jyoti plan."
+2.  **Plan Comparison**: "What is the difference between Jeevan Azad and Jeevan Utsav?"
+3.  **Annuity Inquiries**: "How does the Jeevan Dhara II pension plan work?"
+4.  **Proposal**: "I want to apply for a term insurance policy." (Triggers the specialized proposal sub-agent).
 
 ## Agents Hierarchy
 
 The system uses a hierarchical agent structure to manage conversation flow and expertise.
 
-### 1. Main Agent: `mainbankingdesk`
+### 1. Main Agent: `insurancemaindesk`
 -   **Role**: Primary customer entry point.
--   **Persona**: Female customer support assistant for Cymbal Bank.
+-   **Persona**: Female customer support assistant for Cymbal Insurance.
 -   **Responsibilities**:
     -   Greeting customers.
-    -   Handling general banking queries (balance, transactions).
-    -   Routing specific credit card queries to the expert sub-agent.
+    -   Handling general insurance inquiries.
+    -   Routing specific product queries to the expert sub-agent.
 -   **Tools**: Google Search.
 
-### 2. Sub-Agent: `creditcard_expert`
--   **Role**: Domain specialist for credit cards.
+### 2. Sub-Agent: `insuranceproduct_expert`
+-   **Role**: Domain specialist for LIC Life Insurance.
 -   **Responsibilities**:
-    -   Answering detailed questions about credit card features, rewards, and fees.
-    -    explaining eligibility criteria based on Indian banking standards.
-    -   Handing off application intents to `card_application`.
--   **Knowledge Base**: Comprehensive details on Indian credit cards (fees, APR, lounge access, etc.).
+    -   Answering detailed questions about plan features, bonuses, and tax benefits.
+    -   Explaining eligibility criteria based on LIC guidelines.
+    -   Handing off proposal intents to `fill_proposal`.
+-   **Knowledge Base**: Comprehensive details on LIC Endowment, Whole Life, Term, and Pension plans.
 
-### 3. Sub-Agent: `card_application`
--   **Role**: Data collection specialist.
+### 3. Sub-Agent: `fill_proposal`
+-   **Role**: Data collection specialist for proposal forms.
 -   **Responsibilities**:
-    -   Collecting applicant details (Name, Income, PAN, etc.) in a structured format.
-    -   Completing the application process.
+    -   Collecting applicant details (Name, Occupation, Sum Assured, etc.) in a structured format.
+    -   Completing the proposal initiation process.
 
 ## Technical Aspects
 
@@ -102,25 +102,25 @@ Access the UI at `http://localhost:8000`.
 
 **Build the Image:**
 ```bash
-docker build -t voiceagents .
+docker build -t InsuranceVoiceAgents .
 ```
 
 **Run Container:**
 ```bash
-docker run -p 8080:8080 -e GOOGLE_API_KEY=your_key voiceagents
+docker run -p 8080:8080 -e GOOGLE_API_KEY=your_key InsuranceVoiceAgents
 ```
 
 ### 3. Deploy to Google Cloud Run
 
 1.  **Build and Push Image**:
     ```bash
-    gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/voiceagents
+    gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/InsuranceVoiceAgents
     ```
 
 2.  **Deploy Service**:
     ```bash
-    gcloud run deploy voiceagents \
-      --image gcr.io/YOUR_PROJECT_ID/voiceagents \
+    gcloud run deploy InsuranceVoiceAgents \
+      --image gcr.io/YOUR_PROJECT_ID/InsuranceVoiceAgents \
       --platform managed \
       --region us-central1 \
       --allow-unauthenticated \
@@ -130,5 +130,5 @@ docker run -p 8080:8080 -e GOOGLE_API_KEY=your_key voiceagents
 ## Live Environment
 
 The application is deployed on Google Cloud Run:
-- **Frontend URL**: `https://voiceagents-frontend-2ewjgqzoja-uc.a.run.app`
-- **Backend API URL**: `https://voiceagents-2ewjgqzoja-uc.a.run.app`
+- **Frontend URL**: `https://InsuranceVoiceAgents-frontend-2ewjgqzoja-uc.a.run.app`
+- **Backend API URL**: `https://InsuranceVoiceAgents-2ewjgqzoja-uc.a.run.app`

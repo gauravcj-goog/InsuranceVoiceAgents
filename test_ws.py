@@ -3,7 +3,7 @@ import websockets
 import json
 
 async def test_connection():
-    uri = "wss://voiceagents-backend-2ewjgqzoja-uc.a.run.app/ws/test-user/test-session"
+    uri = "wss://InsuranceVoiceAgents-backend-2ewjgqzoja-uc.a.run.app/ws/test-user/test-session"
     try:
         async with websockets.connect(uri) as websocket:
             print("Connected!")

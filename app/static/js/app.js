@@ -1,5 +1,5 @@
 /**
- * app.js: JS code for the Cymbal Bank voice assistant.
+ * app.js: JS code for the Cymbal Insurance voice assistant.
  */
 
 /**
@@ -333,7 +333,7 @@ function connectWebsocket() {
   websocket.onopen = function () {
     console.log("WebSocket connection opened.");
     updateConnectionStatus(true);
-    addSystemMessage("Connected to Cymbal Bank Assistant");
+    addSystemMessage("Connected to Cymbal Insurance Assistant");
 
     // Start keepalive heartbeat
     if (pingInterval) clearInterval(pingInterval);
@@ -724,7 +724,7 @@ function connectWebsocket() {
       console.log("Reconnecting...");
 
       // Log reconnection attempt to console
-      addConsoleEntry('outgoing', 'Reconnecting to Cymbal Bank server...', {
+      addConsoleEntry('outgoing', 'Reconnecting to Cymbal Insurance server...', {
         userId: userId,
         sessionId: sessionId
       }, '🔄', 'system');

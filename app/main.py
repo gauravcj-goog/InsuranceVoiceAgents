@@ -22,7 +22,7 @@ load_dotenv(Path(__file__).parent / ".env")
 
 # Import agent after loading environment variables
 # pylint: disable=wrong-import-position
-from mainbankingdesk.agent import agent as mainbankingdesk  # noqa: E402
+from insurancemaindesk.agent import agent as insurancemaindesk  # noqa: E402
 
 # Configure logging
 logging.basicConfig(
@@ -35,14 +35,14 @@ logger = logging.getLogger(__name__)
 warnings.filterwarnings("ignore", category=UserWarning, module="pydantic")
 
 # Application name constant
-APP_NAME = "cymbal-bank"
+APP_NAME = "cymbal-insurance"
 
 # ========================================
 # Phase 1: Application Initialization (once at startup)
 # ========================================
 
 # Init logger
-logger.info("Starting Cymbal Bank Multi-Agent (Clean Config - Revision Check)")
+logger.info("Starting Cymbal Insurance Multi-Agent (Clean Config - Revision Check)")
 app = FastAPI()
 
 # Configure CORS
@@ -63,7 +63,7 @@ session_service = InMemorySessionService()
 # Define your runner
 runner = Runner(
     app_name=APP_NAME,
-    agent=mainbankingdesk,
+    agent=insurancemaindesk,
     session_service=session_service,
 )
 
@@ -106,7 +106,7 @@ async def websocket_endpoint(
     # ONLY support AUDIO response modality.
     # Half-cascade models support both TEXT and AUDIO,
     # we default to TEXT for better performance.
-    model_name = mainbankingdesk.model
+    model_name = insurancemaindesk.model
     is_native_audio = "native-audio" in model_name.lower() or "gemini-2.0" in model_name.lower() or "gemini-1.5" in model_name.lower()
 
     if is_native_audio:

@@ -6,5 +6,5 @@
 window.APP_CONFIG = {
   // Default to current host for local development if not specified
   // In production, this should be the full URL of the backend (e.g., "wss://backend-xyz.a.run.app")
-  BACKEND_URL: "wss://voiceagents-backend-787798151876.us-central1.run.app"
+  BACKEND_URL: "wss://insurance-voice-backend-787798151876.us-central1.run.app"
 };
