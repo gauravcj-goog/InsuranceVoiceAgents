@@ -1,0 +1,7 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/learn-361304/voiceagents-frontend', '-f', 'frontend/Dockerfile', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/learn-361304/voiceagents-frontend']
+images:
+- 'gcr.io/learn-361304/voiceagents-frontend'
