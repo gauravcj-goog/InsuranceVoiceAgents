@@ -61,7 +61,7 @@ The system uses a hierarchical agent structure to manage conversation flow and e
 ### Prerequisites
 -   Python 3.10+
 -   [uv](https://docs.astral.sh/uv/) (recommended) or pip
--   Google API Key (for Gemini Live API) or Google Cloud Project (for Vertex AI)
+-   Google Cloud Project (for Vertex AI)
 
 ### 1. Local Setup
 
@@ -81,9 +81,14 @@ pip install -r requirements.txt # or install manually
 Create an `app/.env` file:
 
 ```bash
-GOOGLE_API_KEY=your_api_key_here
+# Set up Google Cloud authentication
+# Run: gcloud auth application-default login
+
 # Optional: Set model
-DEMO_AGENT_MODEL=gemini-2.5-flash-native-audio-preview-12-2025
+DEMO_AGENT_MODEL=gemini-live-2.5-flash-native-audio
+GOOGLE_GENAI_USE_VERTEXAI=TRUE
+GOOGLE_CLOUD_PROJECT=your_project_id
+GOOGLE_CLOUD_LOCATION=us-central1
 ```
 
 **Run the Server:**
@@ -102,33 +107,37 @@ Access the UI at `http://localhost:8000`.
 
 **Build the Image:**
 ```bash
-docker build -t InsuranceVoiceAgents .
+docker build -t insurance-voice-agents .
 ```
 
 **Run Container:**
 ```bash
-docker run -p 8080:8080 -e GOOGLE_API_KEY=your_key InsuranceVoiceAgents
+docker run -p 8080:8080 \
+  -e GOOGLE_GENAI_USE_VERTEXAI=TRUE \
+  -e GOOGLE_CLOUD_PROJECT=your_project_id \
+  -e GOOGLE_CLOUD_LOCATION=us-central1 \
+  insurance-voice-agents
 ```
 
 ### 3. Deploy to Google Cloud Run
 
 1.  **Build and Push Image**:
     ```bash
-    gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/InsuranceVoiceAgents
+    gcloud builds submit --tag gcr.io/YOUR_PROJECT_ID/insurance-voice-backend
     ```
 
 2.  **Deploy Service**:
     ```bash
-    gcloud run deploy InsuranceVoiceAgents \
-      --image gcr.io/YOUR_PROJECT_ID/InsuranceVoiceAgents \
+    gcloud run deploy insurance-voice-backend \
+      --image gcr.io/YOUR_PROJECT_ID/insurance-voice-backend \
       --platform managed \
       --region us-central1 \
       --allow-unauthenticated \
-      --set-env-vars GOOGLE_API_KEY=your_key
+      --set-env-vars GOOGLE_GENAI_USE_VERTEXAI=TRUE,GOOGLE_CLOUD_PROJECT=YOUR_PROJECT_ID,GOOGLE_CLOUD_LOCATION=us-central1,ALLOWED_ORIGINS="*"
     ```
 
 ## Live Environment
 
 The application is deployed on Google Cloud Run:
-- **Frontend URL**: `https://InsuranceVoiceAgents-frontend-2ewjgqzoja-uc.a.run.app`
-- **Backend API URL**: `https://InsuranceVoiceAgents-2ewjgqzoja-uc.a.run.app`
+- **Frontend URL**: `https://insurance-voice-frontend-787798151876.us-central1.run.app/`
+- **Backend API URL**: `https://insurance-voice-backend-787798151876.us-central1.run.app/`
